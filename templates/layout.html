@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Weather App</title>
+    <link rel="shortcut icon" href="https://img.icons8.com/fluent/48/000000/rainy-weather.png" type="image/x-icon"/>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+<body>
+<div class="form">
+    {%block flash%}
+    {% with message = get_flashed_messages() %}
+    {% if message %}
+    <div class="alert alert-primary alert-dismissible fade show" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        {{message[0]}}
+    </div>
+    {% endif %}
+    {% endwith %}
+    {% endblock %}
+    <form action="/" method="POST">
+        <input type="text" placeholder="Enter a city name" name="city_name" id="input-city">
+        <button type="submit" class="submit-button">Add</button>
+    </form>
+</div>
+<div class="cards">
+<!--    <div class="card night">-->
+<!--        <div class="delete-wrapper">-->
+<!--            <form action="#" method="POST">-->
+<!--                <input type="hidden" name="id" value="">-->
+<!--                <button class="delete-button" type="submit">&#10006;</button>-->
+<!--            </form>-->
+<!--        </div>-->
+<!--        <div class="degrees"><span>9<span class="celsius"> °C</span></span></div>-->
+<!--        <div class="state">Chilly</div>-->
+<!--        <div class="city">BOSTON</div>-->
+<!--    </div>-->
+
+<!--    <div class="card day">-->
+<!--        <div class="delete-wrapper">-->
+<!--            <form action="#" method="POST">-->
+<!--                <input type="hidden" name="id" value="">-->
+<!--                <button class="delete-button" type="submit">&#10006;</button>-->
+<!--            </form>-->
+<!--        </div>-->
+<!--        <div class="degrees"><span>32<span class="celsius"> °C</span></span></div>-->
+<!--        <div class="state">Sunny</div>-->
+<!--        <div class="empty"></div>-->
+<!--        <div class="city">NEW YORK</div>-->
+<!--    </div>-->
+
+<!--    <div class="card evening-morning">-->
+<!--        <div class="delete-wrapper">-->
+<!--            <form action="#" method="POST">-->
+<!--                <input type="hidden" name="id" value="">-->
+<!--                <button class="delete-button" type="submit">&#10006;</button>-->
+<!--            </form>-->
+<!--        </div>-->
+<!--        <div class="degrees"><span>-15<span class="celsius"> °C</span></span></div>-->
+<!--        <div class="state">Cold</div>-->
+<!--        <div class="date_time" style="justify-content: center ; text-align: center ;">19thjuly2001</div>-->
+<!--        <div class="city" >EDMONTON</div>-->
+<!--    </div>-->
+    {% for weather in our_citys%}
+    {% if weather %}
+    <div class="card {{weather.pat}}">
+        <div class="delete-wrapper">
+            <form action="{{url_for('delete_city',city_id=weather.id ) }}" method="POST">
+                <input type="hidden" name="tobedeleted" value="{{weather.city_name}}" >
+                <button class="delete-button" type="submit">&#10006;</button>
+            </form>
+        </div>
+        <div class="degrees"><span>{{ weather.city_temperature }}<span class="celsius"> °C</span></span></div>
+        <div class="state">{{ weather.city_state }}</div>
+        <div class="date_time"> updated : {{ weather.TimeNoted }}  now : {{weather.present_time}}</div>
+        <div class="city">{{ weather.city_name }}</div>
+    </div>
+    {% endif %}
+    {% endfor %}
+</div>
+
+
+<div class="footer">
+  <p>Time api calls limmited to 10 per month.</p>
+</div>
+</body>
+</html>
+
+<!--<!doctype html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport"-->
+<!--          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">-->
+<!--    <meta http-equiv="X-UA-Compatible" content="ie=edge">-->
+<!--    <title>Document</title>-->
+
+<!--    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">-->
+<!--</head>-->
+<!--<body>-->
+<!--     <input id="input-city" >-->
+<!--     -->
+<!--&lt;!&ndash;        <pre>&ndash;&gt;-->
+<!--&lt;!&ndash;..........／＞  フ&ndash;&gt;-->
+<!--&lt;!&ndash;.........|  _  _ |&ndash;&gt;-->
+<!--&lt;!&ndash;.......／` ミ＿xノ      Meow Meow&ndash;&gt;-->
+<!--&lt;!&ndash;....../     |&ndash;&gt;-->
+<!--&lt;!&ndash;...../  ヽ   ﾉ&ndash;&gt;-->
+<!--&lt;!&ndash;....│  | | |&ndash;&gt;-->
+<!--&lt;!&ndash;／￣|   | | |&ndash;&gt;-->
+<!--&lt;!&ndash;| (￣ヽ＿_ヽ_)__)&ndash;&gt;-->
+<!--&lt;!&ndash;.＼二つ&ndash;&gt;-->
+<!--&lt;!&ndash;</pre>&ndash;&gt;-->
+<!--</body>-->
+<!--</html>-->
