@@ -85,9 +85,31 @@ def delete(city_id):
 
 
 # don't change the following way to run flask:
+# if __name__ == '__main__':
+#     db.drop_all()
+#     db.create_all()
+#     app.secret_key = 'super secret key'
+#     #app.config['SESSION_TYPE'] = 'filesystem'
+#     app.run(debug=True,port=8000)
 if __name__ == '__main__':
+<<<<<<< HEAD
+=======
+    db.drop_all()
+    db.create_all()
+    app.secret_key = 'super secret key'
+>>>>>>> fe5eb36efe4495422827af7ceee406709b7d01cd
     if len(sys.argv) > 1:
         arg_host, arg_port = sys.argv[1].split(':')
         app.run(host=arg_host, port=arg_port)
     else:
+<<<<<<< HEAD
         app.run()
+=======
+        app.run(debug=True)
+    #
+    # if len(sys.argv) > 1:
+    #     arg_host, arg_port = sys.argv[1].split(':')
+    #     app.run(host=arg_host, port=arg_port)
+    # else:
+    #     app.run()
+>>>>>>> fe5eb36efe4495422827af7ceee406709b7d01cd
